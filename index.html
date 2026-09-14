@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<!-- viewport-fit=cover lets the safe-area insets in base.css actually resolve on notched phones -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F1EEE6" />
+<meta name="format-detection" content="telephone=no" />
+<title>FundMe — Working capital in days, not weeks</title>
+<meta name="description" content="FundMe is a funding brokerage, not a lender. One application, placed with the funders that fit your file. Apply and get options back within {{TURNAROUND}}." />
+<link rel="canonical" href="{{SITE_URL}}/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="FundMe" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="FundMe — Working capital in days, not weeks" />
+<meta property="og:description" content="A funding brokerage, not a lender. One application, placed with the funders that fit your file." />
+<meta property="og:url" content="{{SITE_URL}}/" />
+<meta property="og:image" content="{{SITE_URL}}/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="The FundMe wordmark above the line: a funding brokerage, not a lender." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="FundMe — Working capital in days, not weeks" />
+<meta name="twitter:description" content="A funding brokerage, not a lender. One application, placed with the funders that fit your file." />
+<meta name="twitter:image" content="{{SITE_URL}}/og.png" />
+
+<!-- Set before stylesheets so reveal elements never flash in unstyled, then hide. -->
+<script>document.documentElement.className = "js";</script>
+
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/components.css" />
+<link rel="stylesheet" href="assets/css/sections.css" />
+
+<!-- NOTE: regenerate both blocks once the outstanding facts are supplied.
+     Structured data must match on-page text exactly. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"FundMe","description":"A business funding brokerage. FundMe places applications with third-party funding partners and is not a lender."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Are you a lender or a broker?","acceptedAnswer":{"@type":"Answer","text":"A broker. We do not lend our own money. We place your application with third-party funding partners, and they decide whether to make an offer and on what terms."}},
+{"@type":"Question","name":"What if I already have an advance out?","acceptedAnswer":{"@type":"Answer","text":"An existing advance does not rule you out. Funders look at how much of the balance is left and what your current daily or weekly payment already takes out. Tell us on the call. A second or third position changes which funders we approach, and leaving it out only wastes a week."}},
+{"@type":"Question","name":"How fast can I get funded?","acceptedAnswer":{"@type":"Answer","text":"Options come back within {{TURNAROUND}}. How fast the money lands after you accept depends on the funder and on how quickly you return signed documents."}}]}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <details class="mobile-menu">
+    <summary aria-label="Menu">
+      <a href="./" class="logo" aria-label="FundMe — Home">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V9.8a1.8 1.8 0 0 1 3.6 0V20zM10.2 20V4.8a1.8 1.8 0 0 1 3.6 0V20zM17.4 20v-7.8a1.8 1.8 0 0 1 3.6 0V20z" fill="currentColor"/><path d="M2 20h20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <span>FundMe</span>
+      </a>
+      <span class="mobile-menu__right">
+        <a href="#contact" class="mono menu-careers">Contact</a>
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </span>
+    </summary>
+    <div class="mobile-menu__panel">
+      <ul>
+        <li><a href="#how">How funding works</a></li>
+        <li><a href="#qualify">See if you qualify</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <hr />
+      <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+    </div>
+  </details>
+
+  <nav class="desktop-nav container" aria-label="Primary">
+    <a href="./" class="logo" aria-label="FundMe — Home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V9.8a1.8 1.8 0 0 1 3.6 0V20zM10.2 20V4.8a1.8 1.8 0 0 1 3.6 0V20zM17.4 20v-7.8a1.8 1.8 0 0 1 3.6 0V20z" fill="currentColor"/><path d="M2 20h20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span>FundMe</span>
+    </a>
+    <div class="desktop-nav__right">
+      <ul>
+        <li><a href="#how" class="mono">How funding works</a></li>
+        <li><a href="#qualify" class="mono">See if you qualify</a></li>
+        <li><a href="#contact" class="mono">Contact</a></li>
+      </ul>
+      <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ══ HERO ══ -->
+<section class="hero container">
+  <h1 class="display-2">Working capital in days, not weeks.</h1>
+  <p class="body-lg hero__sub">For owners who have been in business {{MIN_TIB}} or more and do {{MIN_REVENUE}}+ a month. One application, placed with the funders that fit your file.</p>
+  <div class="hero__actions">
+    <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+  </div>
+  <p class="hero__disclosure">FundMe is a funding brokerage, not a lender. We place applications with third-party funding partners.</p>
+</section>
+
+<!-- ══ THREE-STEP PROCESS (auto-advancing tabs) ══ -->
+<section id="how" class="tour" data-tour data-auto-advance="true" data-auto-advance-interval-ms="5000" aria-label="How funding works">
+  <div class="tour__wrap">
+    <div class="tour__frame">
+      <div class="tour__stage">
+        <div class="tour__sky" aria-hidden="true"></div>
+        <div class="tour__scrim" aria-hidden="true"></div>
+
+        <div role="tablist" aria-label="The three steps" data-tour-tablist class="tour__tabs">
+          <button type="button" role="tab" id="tour-tab-0" aria-selected="true"  aria-controls="tour-panel-0" tabindex="0"  data-tour-tab data-tour-index="0" class="tour__tab mono">1 · Book a call</button>
+          <button type="button" role="tab" id="tour-tab-1" aria-selected="false" aria-controls="tour-panel-1" tabindex="-1" data-tour-tab data-tour-index="1" class="tour__tab mono">2 · We review</button>
+          <button type="button" role="tab" id="tour-tab-2" aria-selected="false" aria-controls="tour-panel-2" tabindex="-1" data-tour-tab data-tour-index="2" class="tour__tab mono">3 · Options back</button>
+        </div>
+
+        <div class="tour__visual" data-tour-visual data-tour-index="0" aria-hidden="false">
+          <div class="step">
+            <p class="step__num" aria-hidden="true">01</p>
+            <p class="step__title">Book a call</p>
+            <p class="step__lead">{{CALL_LENGTH}} minutes, with {{CALL_OWNER}}.</p>
+            <ul class="step__list">
+              <li>Pick a time that suits your day</li>
+              <li>Tell us what the money is for</li>
+              <li>No documents needed yet</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tour__visual is-hidden" data-tour-visual data-tour-index="1" aria-hidden="true">
+          <div class="step">
+            <p class="step__num" aria-hidden="true">02</p>
+            <p class="step__title">We review your file</p>
+            <p class="step__lead">Bring {{DOCS}}.</p>
+            <ul class="step__list">
+              <li>We read the file before anyone sees it</li>
+              <li>We place it only where it fits</li>
+              <li>You hear which funders we approached</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tour__visual is-hidden" data-tour-visual data-tour-index="2" aria-hidden="true">
+          <div class="step">
+            <p class="step__num" aria-hidden="true">03</p>
+            <p class="step__title">Options come back</p>
+            <p class="step__lead">Within {{TURNAROUND}}.</p>
+            <ul class="step__list">
+              <li>You see every offer that came back</li>
+              <li>You see what each one costs</li>
+              <li>You take one, or you walk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="tour__legal mono">FundMe is a funding brokerage, not a lender. Funding decisions and terms are made by third-party funding partners, not by us.</p>
+  </div>
+
+  <div class="tour__copy container" aria-live="polite">
+    <div id="tour-panel-0" role="tabpanel" aria-labelledby="tour-tab-0" data-tour-panel data-tour-index="0" class="tour__panel">
+      <h2 class="heading-2">Pick a time and talk to a person</h2>
+      <p class="body-lg">A {{CALL_LENGTH}} minute call with {{CALL_OWNER}}. We ask what the money is for and how the last few months have gone. That is usually enough to know whether we can help.</p>
+    </div>
+    <div id="tour-panel-1" role="tabpanel" aria-labelledby="tour-tab-1" data-tour-panel data-tour-index="1" class="tour__panel" hidden>
+      <h2 class="heading-2">We read your file before we place it</h2>
+      <p class="body-lg">Bring {{DOCS}}. We look at where your file actually fits, then send it to the funders on our panel who fund that profile. Not to all of them.</p>
+    </div>
+    <div id="tour-panel-2" role="tabpanel" aria-labelledby="tour-tab-2" data-tour-panel data-tour-index="2" class="tour__panel" hidden>
+      <h2 class="heading-2">Options come back within {{TURNAROUND}}</h2>
+      <p class="body-lg">You see what came back and what each one costs. You pick one, or you walk away. How fast the money lands after that depends on the funder and on how quickly you sign.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT WE DO ══ -->
+<section class="what container">
+  <div class="split reveal">
+    <h2 class="heading-2">One application, not twelve</h2>
+    <p class="body-lg">We broker across {{FUNDER_COUNT}} funders, so one application reaches the ones that actually fit your file. The alternative is applying to twelve yourself and taking twelve hits.</p>
+  </div>
+</section>
+
+<!-- ══ USE CASES (marquee) ══ -->
+<section class="marquee-section" aria-label="What businesses use funding for">
+  <div class="container split reveal">
+    <h2 class="heading-2">What businesses use funding for</h2>
+    <p class="body-lg">Most of the files we place are one of these. Yours does not have to be complicated to qualify.</p>
+  </div>
+  <div class="marquee">
+    <div class="marquee__track">
+      <article class="card"><div class="card__art card__art--a"></div><div class="card__body"><p class="card__title">Payroll gap</p><p class="card__meta">Cover a short shortfall</p></div></article>
+      <article class="card"><div class="card__art card__art--b"></div><div class="card__body"><p class="card__title">Inventory at a discount</p><p class="card__meta">Buy while the price holds</p></div></article>
+      <article class="card"><div class="card__art card__art--c"></div><div class="card__body"><p class="card__title">Equipment failure</p><p class="card__meta">Replace it and keep trading</p></div></article>
+      <article class="card"><div class="card__art card__art--d"></div><div class="card__body"><p class="card__title">New location</p><p class="card__meta">Fit-out before it earns</p></div></article>
+      <article class="card"><div class="card__art card__art--e"></div><div class="card__body"><p class="card__title">Tax bill</p><p class="card__meta">Spread a lump sum</p></div></article>
+      <article class="card"><div class="card__art card__art--f"></div><div class="card__body"><p class="card__title">Seasonal slowdown</p><p class="card__meta">Bridge the quiet months</p></div></article>
+      <article class="card"><div class="card__art card__art--g"></div><div class="card__body"><p class="card__title">Marketing push</p><p class="card__meta">Fund it before the return</p></div></article>
+      <!-- duplicate set, for a seamless loop -->
+      <article class="card" aria-hidden="true"><div class="card__art card__art--a"></div><div class="card__body"><p class="card__title">Payroll gap</p><p class="card__meta">Cover a short shortfall</p></div></article>
+      <article class="card" aria-hidden="true"><div class="card__art card__art--b"></div><div class="card__body"><p class="card__title">Inventory at a discount</p><p class="card__meta">Buy while the price holds</p></div></article>
+      <article class="card" aria-hidden="true"><div class="card__art card__art--c"></div><div class="card__body"><p class="card__title">Equipment failure</p><p class="card__meta">Replace it and keep trading</p></div></article>
+      <article class="card" aria-hidden="true"><div class="card__art card__art--d"></div><div class="card__body"><p class="card__title">New location</p><p class="card__meta">Fit-out before it earns</p></div></article>
+      <article class="card" aria-hidden="true"><div class="card__art card__art--e"></div><div class="card__body"><p class="card__title">Tax bill</p><p class="card__meta">Spread a lump sum</p></div></article>
+      <article class="card" aria-hidden="true"><div class="card__art card__art--f"></div><div class="card__body"><p class="card__title">Seasonal slowdown</p><p class="card__meta">Bridge the quiet months</p></div></article>
+      <article class="card" aria-hidden="true"><div class="card__art card__art--g"></div><div class="card__body"><p class="card__title">Marketing push</p><p class="card__meta">Fund it before the return</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUALIFICATION ══ -->
+<section id="qualify" class="qual container">
+  <div class="split reveal">
+    <h2 class="heading-2">Is this you?</h2>
+    <p class="body-lg">We would rather tell you now than take a call slot and tell you later.</p>
+  </div>
+  <div class="qual__grid reveal">
+    <div class="qual__card">
+      <p class="mono qual__eyebrow">You qualify if</p>
+      <ul class="qual__list">
+        <li>In business {{MIN_TIB}} or more</li>
+        <li>{{MIN_REVENUE}}+ monthly revenue</li>
+        <li>A business bank account</li>
+        <li>Based in {{TERRITORY}}</li>
+      </ul>
+    </div>
+    <div class="qual__note">
+      <p class="mono qual__eyebrow qual__eyebrow--dark">We are not right for</p>
+      <p class="body-lg">Businesses in their first months, anyone without a business bank account, and anyone who wants a personal loan. If that is you, we will say so on the call rather than take up your afternoon.</p>
+      <a href="{{BOOKING_URL}}" class="btn btn--primary qual__cta">Apply now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW WE PROTECT YOUR FILE (dark) ══ -->
+<section class="safety">
+  <div class="container">
+    <div class="split reveal">
+      <h2 class="heading-2">How we protect your file</h2>
+      <p class="body-lg">Your application is not a mailing list. We do not send it to twenty funders and wait to see who bites.</p>
+    </div>
+
+    <div class="safety__stage reveal">
+      <div class="sf-divider" aria-hidden="true"></div>
+      <div class="sf-lock" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      </div>
+      <ul class="chips chips--left">
+        <li class="chip">Placed only where it fits</li>
+        <li class="chip">You hear who we approached</li>
+        <li class="chip">Bank statements are not resold</li>
+      </ul>
+      <ul class="chips chips--right">
+        <li class="chip">Credit impact: {{IF_TRUE}}</li>
+        <li class="chip">You see every offer first</li>
+        <li class="chip">Nothing is signed without you</li>
+      </ul>
+    </div>
+
+    <p class="safety__legal mono">Funding decisions, offer terms, and any credit checks are made by the third-party funding partner, not by FundMe. Confirm credit-search treatment with each funder before relying on it.</p>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="cta container reveal">
+  <h2 class="display-2 cta__title">A bank takes weeks.<br />We take days.</h2>
+  <p class="body-lg cta__sub">Apply and find out what your file can actually get.</p>
+  <div class="cta__actions">
+    <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq container">
+  <div class="faq__grid">
+    <h2 class="heading-2 reveal">Answers to your questions</h2>
+    <div class="faq__list">
+      <details class="qa"><summary><span>Does FundMe charge me anything?</span><i aria-hidden="true"></i></summary><div class="qa__inner"><p>{{MERCHANT_FEE}}</p></div></details>
+      <details class="qa"><summary><span>Are you a lender or a broker?</span><i aria-hidden="true"></i></summary><div class="qa__inner"><p>A broker. We do not lend our own money. We place your application with third-party funding partners, and <strong>they</strong> decide whether to make an offer and on what terms.</p></div></details>
+      <details class="qa"><summary><span>Will this affect my credit?</span><i aria-hidden="true"></i></summary><div class="qa__inner"><p>{{CREDIT_IMPACT}}</p><p>This depends on which funders we place with, so we will not make a blanket claim until it is confirmed for every funder on the panel.</p></div></details>
+      <details class="qa"><summary><span>What if I already have an advance out?</span><i aria-hidden="true"></i></summary><div class="qa__inner"><p>It does not rule you out. Funders look at how much of the balance is left and what your current daily or weekly payment already takes out.</p><p>Tell us on the call. A second or third position changes which funders we approach, and leaving it out only wastes a week.</p></div></details>
+      <details class="qa"><summary><span>How fast can I get funded?</span><i aria-hidden="true"></i></summary><div class="qa__inner"><p>Options come back within <strong>{{TURNAROUND}}</strong>. How fast the money lands after you accept depends on the funder and on how quickly you return signed documents.</p></div></details>
+      <details class="qa"><summary><span>What documents do you need?</span><i aria-hidden="true"></i></summary><div class="qa__inner"><p>{{DOCS}}</p></div></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer id="contact" class="site-footer">
+  <div class="container">
+    <a href="./" class="logo logo--light" aria-label="FundMe — Home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V9.8a1.8 1.8 0 0 1 3.6 0V20zM10.2 20V4.8a1.8 1.8 0 0 1 3.6 0V20zM17.4 20v-7.8a1.8 1.8 0 0 1 3.6 0V20z" fill="currentColor"/><path d="M2 20h20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span>FundMe</span>
+    </a>
+
+    <div class="footer__cols">
+      <ul><li><a href="#how" class="mono">How funding works</a></li><li><a href="#qualify" class="mono">See if you qualify</a></li><li><a href="{{BOOKING_URL}}" class="mono">Apply now</a></li></ul>
+      <ul><li><a href="#contact" class="mono">Contact us</a></li><li><a href="./legal/" class="mono">Legal</a></li><li><a href="{{SOCIAL_HANDLE}}" class="mono">{{SOCIAL_HANDLE}}</a></li></ul>
+      <ul><li><a href="./terms/" class="mono">Terms of Service</a></li><li><a href="./privacy/" class="mono">Privacy Policy</a></li><li><a href="./cookies/" class="mono">Cookie Notice</a></li></ul>
+    </div>
+
+    <address class="footer__address mono">{{ENTITY_NAME}} · {{CONTACT}}</address>
+
+    <p class="footer__legal">
+      FundMe is a funding brokerage, not a lender. We do not make credit decisions and we do not fund applications. Applications are placed with third-party funding partners, who decide whether to make an offer and on what terms. Any figures discussed before an offer is issued are indicative only.
+    </p>
+    <p class="footer__legal">
+      Commercial financing disclosures: {{DISCLOSURE}} — California, New York, Utah and Virginia each impose their own commercial financing disclosure requirements. Confirm which apply across {{TERRITORY}} before any advertising runs.
+    </p>
+    <p class="footer__legal">
+      {{TCPA_CONSENT}} — by giving us your number you agree to be contacted about your enquiry, including by phone and text. Message and data rates may apply. Reply STOP to opt out.
+    </p>
+    <p class="footer__legal">{{COOKIE_CONSENT}} — an EU cookie consent banner is required before any non-essential cookies load.</p>
+    <p class="footer__copy mono">© {{YEAR}} {{ENTITY_NAME}}</p>
+  </div>
+  <p class="footer__wordmark" aria-hidden="true">Days, Not Weeks</p>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
