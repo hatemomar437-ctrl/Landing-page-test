@@ -101,7 +101,7 @@
       version: 1,
       submittedAt: new Date().toISOString(),
       startedAt: state.startedAt,
-      contact: { email: a.email || null, phone: a.phone || null, state: a.state || null },
+      contact: { firstName: a.firstName || null, middleName: a.middleName || null, email: a.email || null, phone: a.phone || null, state: a.state || null },
       consent: a.consentAt ? {
         given: true,
         timestamp: a.consentAt,
@@ -210,6 +210,8 @@
 
   /* ── Q1: contact ────────────────────────────────────── */
   var contactForm = root.querySelector('[data-contact-form]');
+  var first   = contactForm.querySelector('#firstName');
+  var middle  = contactForm.querySelector('#middleName');
   var email   = contactForm.querySelector('#email');
   var phone   = contactForm.querySelector('#phone');
   var stateEl = contactForm.querySelector('#state');
@@ -232,6 +234,10 @@
     if (msg) { el.setAttribute('aria-invalid', 'true'); if (err) { err.textContent = msg; err.dataset.show = ''; } }
     else     { el.removeAttribute('aria-invalid');      if (err) delete err.dataset.show; }
     return !msg;
+  }
+
+  function validFirst() {
+    return setError(first, first.value.trim() ? '' : 'Enter your first name.');
   }
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -283,13 +289,14 @@
 
   email.addEventListener('blur', function (e) { if (email.value && !blurToSubmit(e)) validEmail(); });
   phone.addEventListener('blur', function (e) { if (phone.value && !blurToSubmit(e)) validPhone(); });
+  first.addEventListener('input', function () { if (first.getAttribute('aria-invalid')) validFirst(); });
   email.addEventListener('input', function () { if (email.getAttribute('aria-invalid')) validEmail(); });
   phone.addEventListener('input', function () { if (phone.getAttribute('aria-invalid')) validPhone(); });
   stateEl.addEventListener('change', function () {
     if (stateEl.value) delete stateEl.dataset.empty; else stateEl.dataset.empty = '';
     validState();
     /* A hard disqualifier chosen with the rest of Q1 already valid routes out now. */
-    if (stateEl.value === 'not-listed' && EMAIL_RE.test(email.value.trim()) &&
+    if (stateEl.value === 'not-listed' && first.value.trim() && EMAIL_RE.test(email.value.trim()) &&
         validPhoneDigits(phoneDigits(phone.value)) && consent.checked) {
       commitContact();
       disqualify('state');
@@ -302,6 +309,8 @@
   });
 
   function commitContact() {
+    state.answers.firstName = first.value.trim();
+    state.answers.middleName = middle.value.trim();
     state.answers.email = email.value.trim();
     state.answers.phone = '+1' + phoneDigits(phone.value);
     state.answers.phoneDisplay = phone.value;
@@ -312,8 +321,8 @@
 
   contactForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var ok = [validEmail(), validPhone(), validState(), validConsent()];
-    var firstBad = [email, phone, stateEl, consent][ok.indexOf(false)];
+    var ok = [validFirst(), validEmail(), validPhone(), validState(), validConsent()];
+    var firstBad = [first, email, phone, stateEl, consent][ok.indexOf(false)];
     if (firstBad) { firstBad.focus(); return; }
     commitContact();
     if (isDisqualifier('state', state.answers.state)) { disqualify('state'); return; }
@@ -321,6 +330,8 @@
   });
 
   /* Restore Q1 values after a refresh */
+  if (state.answers.firstName)    first.value = state.answers.firstName;
+  if (state.answers.middleName)   middle.value = state.answers.middleName;
   if (state.answers.email)        email.value = state.answers.email;
   if (state.answers.phoneDisplay) phone.value = state.answers.phoneDisplay;
   if (state.answers.state)        { stateEl.value = state.answers.state; if (stateEl.value) delete stateEl.dataset.empty; }
@@ -475,7 +486,9 @@
       'metadata[fundingAmount]': a.fundingAmount,
       'metadata[leadId]': state.id
     };
-    if (a.businessName) config.name = a.businessName;
+    /* The booking is in the person's name; the business rides in metadata. */
+    var fullName = [a.firstName, a.middleName].filter(Boolean).join(' ');
+    if (fullName) config.name = fullName;
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ad_id', 'fbclid'].forEach(function (k) {
       if (t[k]) config['metadata[' + k + ']'] = t[k];
     });

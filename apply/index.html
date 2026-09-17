@@ -63,6 +63,18 @@
 
       <form class="q__body" novalidate data-contact-form>
         <div class="field">
+          <label class="mono field__label" for="firstName">First name</label>
+          <input class="input" id="firstName" name="firstName" type="text" autocomplete="given-name" required aria-describedby="firstName-err" />
+          <p class="field__error" id="firstName-err">Enter your first name.</p>
+        </div>
+
+        <div class="field">
+          <label class="mono field__label" for="middleName">Middle name <small>Optional</small></label>
+          <input class="input" id="middleName" name="middleName" type="text" autocomplete="additional-name" aria-describedby="middleName-err" />
+          <p class="field__error" id="middleName-err"></p>
+        </div>
+
+        <div class="field">
           <label class="mono field__label" for="email">Email</label>
           <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" required aria-describedby="email-err" />
           <p class="field__error" id="email-err">Enter a valid email address.</p>
