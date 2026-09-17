@@ -114,7 +114,9 @@ async function handleSubmission(body, env) {
     log('error', 'client/server status mismatch — server verdict used', { id: body.id, client: clientStatus, server: result.status });
   }
 
-  const data = { email: email, status: result.status };
+  /* Phone is stored by apply.js as E.164 (+1XXXXXXXXXX). Empty string, never null, if absent. */
+  const phone = body.contact && typeof body.contact.phone === 'string' ? body.contact.phone.trim() : '';
+  const data = { email: email, status: result.status, phone: phone };
   const sheets = await postToSheets(env, data);
   if (sheets.ok) log('info', 'logged to Sheets', { id: body.id, status: result.status, tier: result.tier });
   else log('error', 'Sheets logging failed (user flow unaffected)', { id: body.id, status: result.status, error: sheets.error, body: sheets.body });
