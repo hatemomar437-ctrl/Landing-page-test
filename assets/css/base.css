@@ -57,6 +57,25 @@ address { font-style: normal; }
 }
 .skip-link:focus { left: 16px; }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Page transition: landing → /apply → /thank-you read as one surface.
+   The @view-transition opt-in lives INLINE in each page's <head>: Chrome
+   ignores it when it only arrives via an external stylesheet. Browsers
+   with cross-document view transitions crossfade natively; main.js and
+   apply.js add .is-leaving as a fallback fade elsewhere. */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: .22s; animation-timing-function: var(--ease); }
+html.is-leaving body { opacity: 0; transition: opacity .16s var(--ease); }
+
 /* Type primitives */
 .display-2 {
   font-size: var(--display-2);
@@ -130,6 +149,9 @@ address { font-style: normal; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none !important; }
+  html.is-leaving body { opacity: 1; transition: none; }
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;

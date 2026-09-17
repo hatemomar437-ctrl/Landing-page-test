@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F1EEE6" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%276%27 fill=%27%23003439%27/%3E%3Cpath d=%27M5 18v-7.2a1.4 1.4 0 0 1 2.8 0V18zM10.6 18V6.8a1.4 1.4 0 0 1 2.8 0V18zM16.2 18v-5.2a1.4 1.4 0 0 1 2.8 0V18z%27 fill=%27%23F1EEE6%27/%3E%3Cpath d=%27M4 18h16%27 stroke=%27%23F1EEE6%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+<meta name="robots" content="noindex" />
+<title>Thank you — FundMe</title>
+<meta name="description" content="Thanks for your time. FundMe is not able to help right now." />
+
+<!-- Must be inline: see base.css §Page transition -->
+<style>@view-transition { navigation: auto; }</style>
+<script>document.documentElement.className = "js";</script>
+
+<link rel="stylesheet" href="../assets/css/tokens.css" />
+<link rel="stylesheet" href="../assets/css/base.css" />
+<link rel="stylesheet" href="../assets/css/components.css" />
+<link rel="stylesheet" href="../assets/css/form.css" />
+</head>
+
+<body class="page-form">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container form-header__row">
+    <a href="../" class="logo" aria-label="FundMe — Home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V9.8a1.8 1.8 0 0 1 3.6 0V20zM10.2 20V4.8a1.8 1.8 0 0 1 3.6 0V20zM17.4 20v-7.8a1.8 1.8 0 0 1 3.6 0V20z" fill="currentColor"/><path d="M2 20h20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span>FundMe</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container form-stage">
+    <section class="outcome" data-outcome>
+      <p class="mono q__eyebrow">Thanks for your time</p>
+      <h1 class="q__title">Based on what you've told us, we're not able to help right now.</h1>
+
+      <!-- One reason paragraph is shown, chosen from the disqualifying answer.
+           The default covers a direct visit with no answers in this tab. -->
+      <p class="body-lg outcome__lead" data-reason="default">We work with businesses trading at least {{MIN_TIB}} with {{MIN_REVENUE}}+ in monthly revenue. If that changes, come back and we'll take another look.</p>
+      <p class="body-lg outcome__lead" data-reason="state" hidden>Right now we only place files for businesses based in {{TERRITORY}}, and you told us your state isn't on that list. If that changes, come back and we'll take another look.</p>
+      <p class="body-lg outcome__lead" data-reason="timeInBusiness" hidden>You told us the business has been trading for less than six months. We work with businesses trading at least {{MIN_TIB}} with {{MIN_REVENUE}}+ in monthly revenue. If that changes, come back and we'll take another look.</p>
+      <p class="body-lg outcome__lead" data-reason="monthlyRevenue" hidden>You told us the business takes in under $20,000 a month. We work with businesses trading at least {{MIN_TIB}} with {{MIN_REVENUE}}+ in monthly revenue. If that changes, come back and we'll take another look.</p>
+      <p class="body-lg outcome__lead" data-reason="authority" hidden>You told us someone else makes the decision. We need to speak with the person who can sign for the business. If they'd like to talk to us, come back and we'll take another look.</p>
+
+      <form class="checkin" novalidate data-checkin>
+        <label class="mono field__label" for="checkin-email">Want us to check back in a few months?</label>
+        <div class="checkin__row">
+          <input class="input" id="checkin-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" aria-describedby="checkin-email-err" />
+          <button type="submit" class="btn btn--primary">Check back with me</button>
+        </div>
+        <p class="field__error" id="checkin-email-err">Enter a valid email address.</p>
+        <p class="checkin__ok" data-checkin-ok hidden>Noted. We'll get in touch in a few months to see where things stand.</p>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="form-footer">
+  <div class="container">
+    <p>FundMe is a funding brokerage, not a lender. We do not make credit decisions and we do not fund applications. Applications are placed with third-party funding partners, who decide whether to make an offer and on what terms. <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a></p>
+  </div>
+</footer>
+
+<div class="consent" role="region" aria-label="Cookie choices" data-consent hidden>
+  <p>We would like to set a Meta advertising cookie so we can see which ads bring people here. Nothing is set until you choose. <a href="../cookies/">Cookie notice</a></p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary" data-consent-accept>Accept</button>
+    <button type="button" class="btn btn--secondary" data-consent-essential>Essential only</button>
+  </div>
+</div>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/consent.js" defer></script>
+<script>
+/* Show the reason for the visitor's own answer and prefill the check-in
+   email from Q1. Both come from sessionStorage — nothing personal in the URL. */
+(function () {
+  'use strict';
+  var cfg = window.FUNDME_CONFIG || {};
+  var outcome = null;
+  try { outcome = JSON.parse(sessionStorage.getItem('fundme_outcome')); } catch (e) {}
+
+  var reason = outcome && outcome.reason;
+  var wanted = document.querySelector('[data-reason="' + reason + '"]');
+  if (wanted) {
+    document.querySelectorAll('[data-reason]').forEach(function (p) { p.hidden = p !== wanted; });
+  }
+
+  var form  = document.querySelector('[data-checkin]');
+  var input = document.getElementById('checkin-email');
+  var err   = document.getElementById('checkin-email-err');
+  var ok    = document.querySelector('[data-checkin-ok]');
+  if (outcome && outcome.email) input.value = outcome.email;
+
+  function isPlaceholder(v) { return !v || /^\{\{[^}]*\}\}$/.test(String(v)); }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+      input.setAttribute('aria-invalid', 'true'); err.dataset.show = ''; input.focus(); return;
+    }
+    input.removeAttribute('aria-invalid'); delete err.dataset.show;
+
+    var payload = { id: outcome && outcome.id, type: 'checkin', email: v, reason: reason || null, at: new Date().toISOString() };
+    try {
+      var all = JSON.parse(localStorage.getItem('fundme_submissions') || '[]');
+      all.push(payload);
+      localStorage.setItem('fundme_submissions', JSON.stringify(all));
+    } catch (x) {}
+    if (!isPlaceholder(cfg.SUBMIT_ENDPOINT)) {
+      try { navigator.sendBeacon(cfg.SUBMIT_ENDPOINT, new Blob([JSON.stringify(payload)], { type: 'application/json' })); } catch (x) {}
+    }
+    if (window.FundMeTrack) window.FundMeTrack.custom('CheckInRequested', { reason: reason || 'unknown' });
+
+    form.querySelector('.checkin__row').hidden = true;
+    ok.hidden = false;
+    ok.setAttribute('tabindex', '-1');
+    ok.focus();
+  });
+})();
+</script>
+</body>
+</html>

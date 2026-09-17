@@ -1,0 +1,301 @@
+/* ── Qualification form (/apply) and outcome page (/thank-you) ───
+   Loaded after tokens/base/components. Nothing here introduces a
+   color, typeface or radius the landing page does not already use:
+   fields and options are built from --surface, --line, --primary and
+   the 18px radius of the step card; buttons are the landing .btn. */
+
+.page-form {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.page-form main { flex: 1 0 auto; display: flex; flex-direction: column; }
+
+/* ── Header: logo only, no exit path mid-form ──────────── */
+.form-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  padding-block: 4px;
+}
+@media (min-width: 1024px) { .form-header__row { padding-block: 24px; } }
+.form-header__step {
+  color: var(--fg-muted);
+  font-weight: 700;
+  letter-spacing: .09em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin progress line in the landing page's CTA color. Fixed to the
+   very top so it reads as part of the browser chrome, not the page. */
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 60;
+  height: 3px;
+  background: var(--line);
+}
+.progress__bar {
+  height: 100%;
+  width: 0;
+  background: var(--primary);
+  transform-origin: left;
+  transition: width .4s var(--ease);
+}
+
+/* ── Stage: one question at a time ────────────────────── */
+.form-stage {
+  position: relative;
+  flex: 1 0 auto;
+  display: grid;
+  padding-block: 40px 56px;
+}
+@media (min-width: 1024px) { .form-stage { padding-block: 64px 96px; } }
+
+.q {
+  grid-area: 1 / 1;
+  width: 100%;
+  max-width: 40rem;
+}
+.q__eyebrow {
+  color: var(--fg-muted);
+  font-weight: 700;
+  letter-spacing: .09em;
+}
+.q__title {
+  margin-top: 12px;
+  font-size: var(--heading-1);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.q__title:focus { outline: none; }
+.q__help { margin-top: 12px; color: var(--fg-muted); }
+.q__body { margin-top: 32px; }
+.q__actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+.q__hint { color: var(--fg-muted); font-size: var(--body-rg); }
+.q__hint kbd {
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+@media (hover: none) and (pointer: coarse) { .q__hint--keys { display: none; } }
+
+/* Enter / leave motion. Reduced motion is zeroed globally in base.css. */
+@media (prefers-reduced-motion: no-preference) {
+  .q.is-entering { animation: q-in .28s var(--ease); }
+  .q.is-entering.is-back { animation-name: q-in-back; }
+}
+@keyframes q-in      { from { opacity: 0; transform: translateY(14px);  } to { opacity: 1; transform: none; } }
+@keyframes q-in-back { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+
+/* ── Fields ───────────────────────────────────────────── */
+.field { display: grid; gap: 8px; }
+.field + .field { margin-top: 20px; }
+.field__label {
+  font-weight: 700;
+  letter-spacing: .09em;
+}
+.field__label small {
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: var(--fg-muted);
+}
+.input,
+.select {
+  width: 100%;
+  height: 56px;
+  padding-inline: 20px;
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  font: inherit;
+  font-size: var(--body-lg);
+  letter-spacing: -.01em;
+  transition: border-color .2s var(--ease);
+}
+.input::placeholder { color: var(--fg-muted); opacity: 1; }
+.input:hover, .select:hover { border-color: rgba(0, 31, 34, .3); }
+.input[aria-invalid="true"],
+.select[aria-invalid="true"] { border: 2px solid var(--fg); padding-inline: 19px; }
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 52px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23001F22' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 18px;
+  cursor: pointer;
+}
+.select:invalid, .select[data-empty] { color: var(--fg-muted); }
+.select option { color: var(--fg); }
+
+.field__error {
+  display: none;
+  font-size: var(--body-rg);
+  color: var(--fg);
+}
+.field__error::before { content: "↑ "; }
+.field__error[data-show] { display: block; }
+
+/* Consent — a real checkbox, restyled, never hidden from AT */
+.check {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 14px;
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: var(--body-rg);
+  line-height: 1.5;
+}
+.check[data-invalid] { border: 2px solid var(--fg); padding: 17px 19px; }
+.check input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  margin-top: 1px;
+  border: 1.5px solid rgba(0, 31, 34, .4);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: background-color .15s var(--ease), border-color .15s var(--ease);
+}
+.check input:checked {
+  background: var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F1EEE6' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 13px no-repeat;
+  border-color: var(--primary);
+}
+
+/* ── Options (one tap = answer) ───────────────────────── */
+.opts { display: grid; gap: 10px; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 60px;
+  padding: 14px 18px;
+  text-align: left;
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  font-size: var(--body-lg);
+  letter-spacing: -.01em;
+  transition: border-color .15s var(--ease), background-color .15s var(--ease), color .15s var(--ease);
+}
+.opt:hover { border-color: rgba(0, 31, 34, .3); }
+.opt__key {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  font-weight: 700;
+  color: var(--fg-muted);
+}
+.opt[aria-pressed="true"] {
+  background: var(--primary);
+  color: var(--primary-fg);
+  border-color: var(--primary);
+}
+.opt[aria-pressed="true"] .opt__key { color: var(--primary-fg); border-color: rgba(241, 238, 230, .4); }
+.opt[aria-pressed="true"]:focus-visible { outline-color: var(--fg); }
+
+/* ── Back control: the nav-link idiom from the header ─── */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--fg);
+  transition: opacity .2s var(--ease);
+}
+.back:hover { opacity: .7; }
+.back svg { width: 14px; height: 14px; }
+
+/* ── Outcome screens ──────────────────────────────────── */
+.outcome { max-width: 44rem; }
+.outcome__lead { margin-top: 20px; }
+.outcome__docs {
+  margin-top: 24px;
+  padding-left: 14px;
+  border-left: 2px solid var(--primary);
+}
+.outcome__docs strong { font-weight: 500; }
+.outcome__disclosure { margin-top: 28px; color: var(--fg-muted); }
+
+/* Cal.com inline embed slot. min-height reserves layout while the
+   embed script loads, so nothing shifts under the visitor's thumb. */
+.booking {
+  margin-top: 32px;
+  min-height: 560px;
+  background: var(--surface);
+  border-radius: var(--r-card);
+  overflow: hidden;
+}
+.booking--placeholder {
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  text-align: center;
+  color: var(--fg-muted);
+  border: 1px dashed rgba(0, 31, 34, .3);
+  background: none;
+}
+.booking--placeholder code {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  color: var(--fg);
+}
+.booking__done {
+  padding: 32px;
+}
+.booking__done .body-lg { margin-top: 12px; color: var(--fg-muted); }
+
+/* Email check-in on the unqualified page — the only control there */
+.checkin { margin-top: 40px; max-width: 30rem; }
+.checkin__row { display: grid; gap: 12px; margin-top: 16px; }
+@media (min-width: 560px) {
+  .checkin__row { grid-template-columns: 1fr auto; align-items: start; }
+}
+.checkin__row .btn { height: 56px; }
+.checkin__ok { margin-top: 16px; color: var(--fg-muted); }
+
+/* ── Footer, trimmed to the disclosure ─────────────────── */
+.form-footer {
+  padding-block: 24px calc(24px + env(safe-area-inset-bottom));
+  color: var(--fg-muted);
+}
+.form-footer p { max-width: 62rem; font-size: 11px; line-height: 1.6; }
+
+/* No-JS notice: the form is script-driven by design */
+.nojs {
+  padding: 20px;
+  background: var(--surface);
+  border-radius: 18px;
+}

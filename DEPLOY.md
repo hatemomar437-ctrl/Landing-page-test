@@ -9,16 +9,18 @@ files. Upload them as they are.
 Everything in this `dist/` folder — **the contents, not the folder itself**:
 
 ```
-index.html          ← entry point, named exactly index.html
-.nojekyll           ← keep this (see note below)
-assets/css/tokens.css
-assets/css/base.css
-assets/css/components.css
-assets/css/sections.css
-assets/js/main.js
+index.html            ← landing page
+apply/index.html      ← /apply — the qualification form
+thank-you/index.html  ← /thank-you — the unqualified outcome
+.nojekyll             ← keep this (see note below)
+assets/css/{tokens,base,components,sections,form}.css
+assets/js/config.js   ← ALL runtime placeholders live here (booking URL, states, pixel, endpoint)
+assets/js/consent.js  ← cookie banner + Meta Pixel gate
+assets/js/main.js     ← landing page
+assets/js/apply.js    ← form logic
 ```
 
-Total: 50.9 KB, 6 requests, zero external dependencies.
+No external request is made until the visitor accepts cookies (Meta Pixel) or qualifies (Cal.com embed).
 
 ## Steps
 
@@ -74,9 +76,11 @@ These are not deployment blockers, but the site is not launch-ready:
 
 1. **`{{PLACEHOLDER}}` values are visible throughout** — deliberately, per the client brief, so nobody
    ships invented numbers. Fill them from `../docs/company-profile.md`, which lists every one.
-2. **`{{BOOKING_URL}}` is a literal string in the CTA `href`.** All five "Apply now" buttons currently
-   link nowhere. This is the single most important thing to fix — the page has exactly one conversion
-   action and it is not wired up.
+2. **`{{BOOKING_URL}}` in `assets/js/config.js`.** Every "Apply now" now goes to `/apply`; qualified
+   visitors reach an inline Cal.com embed that reads this value. Until it is set, the booking slot shows
+   the placeholder. Also in `config.js`: `TERRITORY_STATES` (the Q1 dropdown — with it empty the
+   `{{TERRITORY}}` placeholder is the only selectable state), `META_PIXEL_ID`, and `SUBMIT_ENDPOINT`
+   (submissions are kept in `localStorage.fundme_submissions` until an endpoint exists).
 3. **`{{SITE_URL}}`** appears in the canonical and OG tags. Set it to your real Pages URL
    (`https://<you>.github.io/<repo>`) or your custom domain, or search engines will index it wrong.
 4. **`./terms/`, `./privacy/`, `./cookies/`, `./legal/` do not exist yet** and will 404. The client brief

@@ -12,6 +12,38 @@
 .btn--primary { background: var(--primary); color: var(--primary-fg); }
 .btn--primary:hover { opacity: .9; }
 
+/* ── Cookie consent (EU operator) ─────────────────────── */
+.consent {
+  position: fixed;
+  inset-inline: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 70;
+  max-width: 34rem;
+  margin-inline: auto;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: 0 24px 60px rgba(0, 31, 34, .18);
+  font-size: var(--body-rg);
+  line-height: 1.5;
+}
+@media (min-width: 1024px) { .consent { inset-inline: auto 24px; bottom: 24px; } }
+.consent p { color: var(--fg); }
+.consent a { text-decoration: underline; text-underline-offset: 3px; }
+.consent__actions { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; }
+.consent__actions .btn { height: 44px; padding-inline: 20px; }
+
+/* Secondary button, derived: same geometry as .btn, no fill.
+   The landing page has one primary CTA on purpose; this exists only
+   for the consent banner's "essential only" choice. */
+.btn--secondary {
+  background: transparent;
+  color: var(--fg);
+  box-shadow: inset 0 0 0 1px rgba(0, 31, 34, .3);
+}
+.btn--secondary:hover { background: rgba(0, 31, 34, .06); }
+
 /* ── Logo ────────────────────────────────────────────── */
 .logo {
   display: inline-flex;

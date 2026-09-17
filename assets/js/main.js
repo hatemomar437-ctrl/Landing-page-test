@@ -112,7 +112,28 @@
     revealables.forEach(function (el) { io.observe(el); });
   }
 
-  /* ── 4. Mobile menu ───────────────────────────────────
+  /* ── 4. Apply links ───────────────────────────────────
+     Every CTA goes to /apply carrying the landing page's query string,
+     so utm_* / fbclid / ad_id survive the jump. Rewritten at load, not on
+     click, so middle-click and copy-link get the same URL. The fade is a
+     fallback for browsers without cross-document view transitions. */
+  var search = window.location.search;
+  var applyLinks = document.querySelectorAll('[data-apply]');
+  applyLinks.forEach(function (link) {
+    if (search) link.setAttribute('href', link.getAttribute('href').split('?')[0] + search);
+    link.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if ('PageRevealEvent' in window || reduceMotion.matches) return;
+      e.preventDefault();
+      var href = link.href;
+      document.documentElement.classList.add('is-leaving');
+      window.setTimeout(function () { window.location.assign(href); }, 160);
+    });
+  });
+  /* bfcache restore after the fallback fade */
+  window.addEventListener('pageshow', function () { document.documentElement.classList.remove('is-leaving'); });
+
+  /* ── 5. Mobile menu ───────────────────────────────────
      Links inside the panel close it. Links inside the <summary> bar
      (the logo, "Contact") would otherwise also toggle the menu open,
      so stop the click before it reaches the summary. */

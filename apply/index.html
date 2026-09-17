@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F1EEE6" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%276%27 fill=%27%23003439%27/%3E%3Cpath d=%27M5 18v-7.2a1.4 1.4 0 0 1 2.8 0V18zM10.6 18V6.8a1.4 1.4 0 0 1 2.8 0V18zM16.2 18v-5.2a1.4 1.4 0 0 1 2.8 0V18z%27 fill=%27%23F1EEE6%27/%3E%3Cpath d=%27M4 18h16%27 stroke=%27%23F1EEE6%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
+<title>Apply — FundMe</title>
+<meta name="description" content="Five quick questions to see whether FundMe can place your file. Takes about a minute. No documents needed yet." />
+<link rel="canonical" href="{{SITE_URL}}/apply/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="FundMe" />
+<meta property="og:title" content="Apply — FundMe" />
+<meta property="og:description" content="Five quick questions to see whether FundMe can place your file." />
+<meta property="og:url" content="{{SITE_URL}}/apply/" />
+<meta property="og:image" content="{{SITE_URL}}/og.png" />
+
+<!-- Must be inline: see base.css §Page transition -->
+<style>@view-transition { navigation: auto; }</style>
+<script>document.documentElement.className = "js";</script>
+
+<link rel="stylesheet" href="../assets/css/tokens.css" />
+<link rel="stylesheet" href="../assets/css/base.css" />
+<link rel="stylesheet" href="../assets/css/components.css" />
+<link rel="stylesheet" href="../assets/css/form.css" />
+</head>
+
+<body class="page-form">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="progress" role="progressbar" aria-label="Application progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+  <div class="progress__bar" data-progress></div>
+</div>
+
+<!-- Logo only. No links: there is no exit path mid-form. -->
+<header class="site-header">
+  <div class="container form-header__row">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V9.8a1.8 1.8 0 0 1 3.6 0V20zM10.2 20V4.8a1.8 1.8 0 0 1 3.6 0V20zM17.4 20v-7.8a1.8 1.8 0 0 1 3.6 0V20z" fill="currentColor"/><path d="M2 20h20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span>FundMe</span>
+    </div>
+    <p class="mono form-header__step" data-step-label aria-hidden="true">1 / 5</p>
+  </div>
+</header>
+
+<main id="main">
+  <h1 class="visually-hidden">Apply for funding</h1>
+
+  <div class="container form-stage" data-form aria-live="polite">
+
+    <noscript>
+      <div class="nojs">
+        <p class="body-lg">This application needs JavaScript to run. Turn it on, or reach us at {{CONTACT}}.</p>
+      </div>
+    </noscript>
+
+    <!-- ── Q1: contact + state ── -->
+    <section class="q" data-q="contact" data-kind="fields">
+      <p class="mono q__eyebrow">Question 1 of 5</p>
+      <h2 class="q__title" tabindex="-1">Let's start with where to reach you.</h2>
+      <p class="q__help body-lg">We only use these to talk to you about this enquiry.</p>
+
+      <form class="q__body" novalidate data-contact-form>
+        <div class="field">
+          <label class="mono field__label" for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" required aria-describedby="email-err" />
+          <p class="field__error" id="email-err">Enter a valid email address.</p>
+        </div>
+
+        <div class="field">
+          <label class="mono field__label" for="phone">Mobile phone <small>US</small></label>
+          <input class="input" id="phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="(555) 555-5555" required aria-describedby="phone-err" />
+          <p class="field__error" id="phone-err">Enter a 10-digit US mobile number.</p>
+        </div>
+
+        <div class="field">
+          <label class="mono field__label" for="state">State</label>
+          <select class="select" id="state" name="state" autocomplete="address-level1" required aria-describedby="state-err" data-empty>
+            <option value="" selected disabled>Select your state</option>
+            <!-- Replaced from FUNDME_CONFIG.TERRITORY_STATES when that list is set.
+                 Until then the territory placeholder stays visible, on purpose. -->
+            <optgroup label="States we serve" data-states>
+              <option value="{{TERRITORY}}">{{TERRITORY}}</option>
+            </optgroup>
+            <option value="not-listed">My state isn't listed</option>
+          </select>
+          <p class="field__error" id="state-err">Select your state.</p>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="consent" name="consent" required aria-describedby="consent-err" />
+          <span>I agree to be contacted by FundMe by phone, SMS and email about my funding enquiry. Message and data rates may apply.</span>
+        </label>
+        <p class="field__error" id="consent-err">Tick the box so we are allowed to contact you.</p>
+
+        <div class="q__actions">
+          <button type="submit" class="btn btn--primary">Continue</button>
+          <p class="q__hint">About a minute. No documents needed yet.</p>
+        </div>
+      </form>
+    </section>
+
+    <!-- ── Q2: time in business ── -->
+    <section class="q" data-q="timeInBusiness" data-kind="choice" data-field="timeInBusiness" hidden>
+      <p class="mono q__eyebrow">Question 2 of 5</p>
+      <h2 class="q__title" id="q2-title" tabindex="-1">How long has the business been trading?</h2>
+      <div class="q__body opts" role="group" aria-labelledby="q2-title">
+        <button type="button" class="opt" data-value="lt6m"  aria-pressed="false"><span class="opt__key" aria-hidden="true">1</span>Less than 6 months</button>
+        <button type="button" class="opt" data-value="6-12m" aria-pressed="false"><span class="opt__key" aria-hidden="true">2</span>6 – 12 months</button>
+        <button type="button" class="opt" data-value="1-3y"  aria-pressed="false"><span class="opt__key" aria-hidden="true">3</span>1 – 3 years</button>
+        <button type="button" class="opt" data-value="3y+"   aria-pressed="false"><span class="opt__key" aria-hidden="true">4</span>More than 3 years</button>
+      </div>
+      <div class="q__actions">
+        <button type="button" class="back mono" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>Back</button>
+        <p class="q__hint q__hint--keys">Press <kbd>1</kbd>–<kbd>4</kbd> to choose · <kbd>Backspace</kbd> to go back</p>
+      </div>
+    </section>
+
+    <!-- ── Q3: monthly revenue ── -->
+    <section class="q" data-q="monthlyRevenue" data-kind="choice" data-field="monthlyRevenue" hidden>
+      <p class="mono q__eyebrow">Question 3 of 5</p>
+      <h2 class="q__title" id="q3-title" tabindex="-1">What does the business take in a month, on average?</h2>
+      <p class="q__help body-lg" id="q3-help">Your total business revenue, before expenses.</p>
+      <div class="q__body opts" role="group" aria-labelledby="q3-title" aria-describedby="q3-help">
+        <button type="button" class="opt" data-value="lt20k"    aria-pressed="false"><span class="opt__key" aria-hidden="true">1</span>Under $20,000</button>
+        <button type="button" class="opt" data-value="20-50k"   aria-pressed="false"><span class="opt__key" aria-hidden="true">2</span>$20,000 – $50,000</button>
+        <button type="button" class="opt" data-value="50-150k"  aria-pressed="false"><span class="opt__key" aria-hidden="true">3</span>$50,000 – $150,000</button>
+        <button type="button" class="opt" data-value="150-500k" aria-pressed="false"><span class="opt__key" aria-hidden="true">4</span>$150,000 – $500,000</button>
+        <button type="button" class="opt" data-value="500k+"    aria-pressed="false"><span class="opt__key" aria-hidden="true">5</span>More than $500,000</button>
+      </div>
+      <div class="q__actions">
+        <button type="button" class="back mono" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>Back</button>
+        <p class="q__hint q__hint--keys">Press <kbd>1</kbd>–<kbd>5</kbd> to choose · <kbd>Backspace</kbd> to go back</p>
+      </div>
+    </section>
+
+    <!-- ── Q4: funding amount ── -->
+    <section class="q" data-q="fundingAmount" data-kind="choice" data-field="fundingAmount" hidden>
+      <p class="mono q__eyebrow">Question 4 of 5</p>
+      <h2 class="q__title" id="q4-title" tabindex="-1">How much funding are you looking for?</h2>
+      <div class="q__body opts" role="group" aria-labelledby="q4-title">
+        <button type="button" class="opt" data-value="lt10k"    aria-pressed="false"><span class="opt__key" aria-hidden="true">1</span>Under $10,000</button>
+        <button type="button" class="opt" data-value="10-50k"   aria-pressed="false"><span class="opt__key" aria-hidden="true">2</span>$10,000 – $50,000</button>
+        <button type="button" class="opt" data-value="50-150k"  aria-pressed="false"><span class="opt__key" aria-hidden="true">3</span>$50,000 – $150,000</button>
+        <button type="button" class="opt" data-value="150-500k" aria-pressed="false"><span class="opt__key" aria-hidden="true">4</span>$150,000 – $500,000</button>
+        <button type="button" class="opt" data-value="500k+"    aria-pressed="false"><span class="opt__key" aria-hidden="true">5</span>More than $500,000</button>
+      </div>
+      <div class="q__actions">
+        <button type="button" class="back mono" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>Back</button>
+        <p class="q__hint q__hint--keys">Press <kbd>1</kbd>–<kbd>5</kbd> to choose · <kbd>Backspace</kbd> to go back</p>
+      </div>
+    </section>
+
+    <!-- ── Q5: authority + business name ── -->
+    <section class="q" data-q="authority" data-kind="choice" data-field="authority" hidden>
+      <p class="mono q__eyebrow">Question 5 of 5</p>
+      <h2 class="q__title" id="q5-title" tabindex="-1">Last one. Who signs for the business?</h2>
+
+      <div class="q__body">
+        <div class="field">
+          <label class="mono field__label" for="businessName">Business name</label>
+          <input class="input" id="businessName" name="businessName" type="text" autocomplete="organization" required aria-describedby="businessName-err" />
+          <p class="field__error" id="businessName-err">Add your business name to finish.</p>
+        </div>
+
+        <div class="opts" role="group" aria-labelledby="q5-title" style="margin-top:24px">
+          <button type="button" class="opt" data-value="owner"      aria-pressed="false"><span class="opt__key" aria-hidden="true">1</span>Yes, I'm the owner</button>
+          <button type="button" class="opt" data-value="authorised" aria-pressed="false"><span class="opt__key" aria-hidden="true">2</span>Yes, I'm authorised to sign</button>
+          <button type="button" class="opt" data-value="no"         aria-pressed="false"><span class="opt__key" aria-hidden="true">3</span>No, someone else decides</button>
+        </div>
+      </div>
+
+      <div class="q__actions">
+        <button type="button" class="back mono" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>Back</button>
+        <p class="q__hint q__hint--keys">Press <kbd>1</kbd>–<kbd>3</kbd> to choose · <kbd>Backspace</kbd> to go back</p>
+      </div>
+    </section>
+
+    <!-- ── Qualified: book the call, inline ── -->
+    <section class="q outcome" data-q="booking" hidden>
+      <p class="mono q__eyebrow" data-booking-eyebrow>Next step</p>
+      <h2 class="q__title" tabindex="-1">Pick a time for your call.</h2>
+      <p class="body-lg outcome__lead">On the call we ask what the money is for and how the last few months have gone. Then we tell you where your file fits, and where it doesn't.</p>
+      <p class="body-lg outcome__docs">Have <strong>{{DOCS}}</strong> to hand. We go through them together on the call.</p>
+      <div class="booking" id="cal-inline"></div>
+      <p class="outcome__disclosure">FundMe is a funding brokerage, not a lender. Booking a call is not an application for credit and not an offer of funding. Any decision is made by a third-party funding partner after they see your file.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="form-footer">
+  <div class="container">
+    <p>FundMe is a funding brokerage, not a lender. We do not make credit decisions and we do not fund applications. Applications are placed with third-party funding partners, who decide whether to make an offer and on what terms. <a href="../privacy/">Privacy</a> · <a href="../terms/">Terms</a></p>
+  </div>
+</footer>
+
+<div class="consent" role="region" aria-label="Cookie choices" data-consent hidden>
+  <p>We would like to set a Meta advertising cookie so we can see which ads bring people here. Nothing is set until you choose. Your answers are kept in this tab only. <a href="../cookies/">Cookie notice</a></p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary" data-consent-accept>Accept</button>
+    <button type="button" class="btn btn--secondary" data-consent-essential>Essential only</button>
+  </div>
+</div>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/consent.js" defer></script>
+<script src="../assets/js/apply.js" defer></script>
+</body>
+</html>

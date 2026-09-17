@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#F1EEE6" />
 <meta name="format-detection" content="telephone=no" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%276%27 fill=%27%23003439%27/%3E%3Cpath d=%27M5 18v-7.2a1.4 1.4 0 0 1 2.8 0V18zM10.6 18V6.8a1.4 1.4 0 0 1 2.8 0V18zM16.2 18v-5.2a1.4 1.4 0 0 1 2.8 0V18z%27 fill=%27%23F1EEE6%27/%3E%3Cpath d=%27M4 18h16%27 stroke=%27%23F1EEE6%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3C/svg%3E" />
 <title>FundMe — Working capital in days, not weeks</title>
 <meta name="description" content="FundMe is a funding brokerage, not a lender. One application, placed with the funders that fit your file. Apply and get options back within {{TURNAROUND}}." />
 <link rel="canonical" href="{{SITE_URL}}/" />
@@ -25,6 +26,8 @@
 <meta name="twitter:image" content="{{SITE_URL}}/og.png" />
 
 <!-- Set before stylesheets so reveal elements never flash in unstyled, then hide. -->
+<!-- Must be inline: see base.css §Page transition -->
+<style>@view-transition { navigation: auto; }</style>
 <script>document.documentElement.className = "js";</script>
 
 <link rel="stylesheet" href="assets/css/tokens.css" />
@@ -69,7 +72,7 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       <hr />
-      <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+      <a href="./apply/" data-apply class="btn btn--primary">Apply now</a>
     </div>
   </details>
 
@@ -84,7 +87,7 @@
         <li><a href="#qualify" class="mono">See if you qualify</a></li>
         <li><a href="#contact" class="mono">Contact</a></li>
       </ul>
-      <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+      <a href="./apply/" data-apply class="btn btn--primary">Apply now</a>
     </div>
   </nav>
 </header>
@@ -96,7 +99,7 @@
   <h1 class="display-2">Working capital in days, not weeks.</h1>
   <p class="body-lg hero__sub">For owners who have been in business {{MIN_TIB}} or more and do {{MIN_REVENUE}}+ a month. One application, placed with the funders that fit your file.</p>
   <div class="hero__actions">
-    <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+    <a href="./apply/" data-apply class="btn btn--primary">Apply now</a>
   </div>
   <p class="hero__disclosure">FundMe is a funding brokerage, not a lender. We place applications with third-party funding partners.</p>
 </section>
@@ -228,7 +231,7 @@
     <div class="qual__note">
       <p class="mono qual__eyebrow qual__eyebrow--dark">We are not right for</p>
       <p class="body-lg">Businesses in their first months, anyone without a business bank account, and anyone who wants a personal loan. If that is you, we will say so on the call rather than take up your afternoon.</p>
-      <a href="{{BOOKING_URL}}" class="btn btn--primary qual__cta">Apply now</a>
+      <a href="./apply/" data-apply class="btn btn--primary qual__cta">Apply now</a>
     </div>
   </div>
 </section>
@@ -267,7 +270,7 @@
   <h2 class="display-2 cta__title">A bank takes weeks.<br />We take days.</h2>
   <p class="body-lg cta__sub">Apply and find out what your file can actually get.</p>
   <div class="cta__actions">
-    <a href="{{BOOKING_URL}}" class="btn btn--primary">Apply now</a>
+    <a href="./apply/" data-apply class="btn btn--primary">Apply now</a>
   </div>
 </section>
 
@@ -297,7 +300,7 @@
     </a>
 
     <div class="footer__cols">
-      <ul><li><a href="#how" class="mono">How funding works</a></li><li><a href="#qualify" class="mono">See if you qualify</a></li><li><a href="{{BOOKING_URL}}" class="mono">Apply now</a></li></ul>
+      <ul><li><a href="#how" class="mono">How funding works</a></li><li><a href="#qualify" class="mono">See if you qualify</a></li><li><a href="./apply/" data-apply class="mono">Apply now</a></li></ul>
       <ul><li><a href="#contact" class="mono">Contact us</a></li><li><a href="./legal/" class="mono">Legal</a></li><li><a href="{{SOCIAL_HANDLE}}" class="mono">{{SOCIAL_HANDLE}}</a></li></ul>
       <ul><li><a href="./terms/" class="mono">Terms of Service</a></li><li><a href="./privacy/" class="mono">Privacy Policy</a></li><li><a href="./cookies/" class="mono">Cookie Notice</a></li></ul>
     </div>
@@ -319,6 +322,16 @@
   <p class="footer__wordmark" aria-hidden="true">Days, Not Weeks</p>
 </footer>
 
+<div class="consent" role="region" aria-label="Cookie choices" data-consent hidden>
+  <p>We would like to set a Meta advertising cookie so we can see which ads bring people here. Nothing is set until you choose. <a href="./cookies/">Cookie notice</a></p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--primary" data-consent-accept>Accept</button>
+    <button type="button" class="btn btn--secondary" data-consent-essential>Essential only</button>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/consent.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
