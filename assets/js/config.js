@@ -16,7 +16,7 @@ window.FUNDME_CONFIG = {
   TERRITORY_STATES: [],
 
   /* Meta Pixel ID (digits). Loads only after cookie consent is given. */
-  META_PIXEL_ID: '{{META_PIXEL_ID}}',
+  META_PIXEL_ID: '2127714827841834',
 
   /* Where submissions are POSTed as JSON (qualified and unqualified alike).
      Served by server.js, which re-scores and logs to Google Sheets. Records
