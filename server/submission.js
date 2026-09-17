@@ -116,7 +116,11 @@ async function handleSubmission(body, env) {
 
   /* Phone is stored by apply.js as E.164 (+1XXXXXXXXXX). Empty string, never null, if absent. */
   const phone = body.contact && typeof body.contact.phone === 'string' ? body.contact.phone.trim() : '';
-  const data = { email: email, status: result.status, phone: phone };
+  /* Personal name = Q1 first + middle; business name = Q5. Empty strings when absent. */
+  const str = v => (typeof v === 'string' ? v.trim() : '');
+  const name = [str(body.contact.firstName), str(body.contact.middleName)].filter(Boolean).join(' ');
+  const businessName = str(body.business.name);
+  const data = { email: email, status: result.status, phone: phone, name: name, businessName: businessName };
   const sheets = await postToSheets(env, data);
   if (sheets.ok) log('info', 'logged to Sheets', { id: body.id, status: result.status, tier: result.tier });
   else log('error', 'Sheets logging failed (user flow unaffected)', { id: body.id, status: result.status, error: sheets.error, body: sheets.body });
