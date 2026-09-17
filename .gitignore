@@ -1,0 +1,7 @@
+# Secrets — server-side only
+.env.local
+.env
+.env.*.local
+
+# Node
+node_modules/

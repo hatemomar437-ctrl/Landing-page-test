@@ -19,7 +19,8 @@ window.FUNDME_CONFIG = {
   META_PIXEL_ID: '{{META_PIXEL_ID}}',
 
   /* Where submissions are POSTed as JSON (qualified and unqualified alike).
-     Until set, records are kept in localStorage under "fundme_submissions"
-     so nothing is lost during review. */
-  SUBMIT_ENDPOINT: '{{SUBMIT_ENDPOINT}}'
+     Served by server.js, which re-scores and logs to Google Sheets. Records
+     are also kept in localStorage under "fundme_submissions". On a static
+     host with no server.js (GitHub Pages) the POST 404s harmlessly. */
+  SUBMIT_ENDPOINT: '/api/submit'
 };

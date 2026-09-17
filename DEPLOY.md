@@ -1,4 +1,22 @@
-# Deploying this site to GitHub Pages
+# Deploying this site
+
+## Two parts
+
+1. **The site** — static HTML/CSS/JS. Host anywhere, including GitHub Pages (below).
+2. **`server.js`** — a dependency-free Node server that serves the same files **and** handles
+   `POST /api/submit`: it re-runs the qualification scoring server-side and logs
+   `{ email, status }` to the Google Sheets Apps Script webhook. GitHub Pages cannot run it, so on
+   Pages the form works but nothing reaches the sheet (the beacon 404s silently — the visitor's
+   flow is never affected). To get Sheets logging, run `server.js` on any Node host
+   (Render, Railway, Fly, a VPS…) with the two secrets set as environment variables or in
+   `.env.local`. See `.env.example`. **Never commit `.env.local`** — it is gitignored.
+
+```bash
+cp .env.example .env.local     # fill in SHEETS_WEBHOOK_URL and SHEETS_SECRET
+node server.js                 # http://localhost:3000
+```
+
+## GitHub Pages (site only)
 
 **No build step. No framework.** This is hand-written static HTML, CSS and JS — no React, no Vite,
 no npm, no `node_modules`. There is nothing to compile: the files in this folder *are* the production

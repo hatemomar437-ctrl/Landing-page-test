@@ -4,7 +4,8 @@
    they are chosen. Scoring runs client-side on completion and travels
    with the record and into the Cal.com booking metadata.
 
-   Depends on config.js (FUNDME_CONFIG) and consent.js (FundMeTrack). */
+   Depends on config.js (FUNDME_CONFIG), consent.js (FundMeTrack) and
+   scoring.js (FundMeScoring). */
 (function () {
   'use strict';
 
@@ -21,38 +22,10 @@
   var STEPS = ['contact', 'timeInBusiness', 'monthlyRevenue', 'fundingAmount', 'authority'];
   var TOTAL = STEPS.length;
 
-  var ORDER = {
-    timeInBusiness: ['lt6m', '6-12m', '1-3y', '3y+'],
-    monthlyRevenue: ['lt20k', '20-50k', '50-150k', '150-500k', '500k+'],
-    fundingAmount:  ['lt10k', '10-50k', '50-150k', '150-500k', '500k+']
-  };
-  var REV_MID = { '20-50k': 35000, '50-150k': 100000, '150-500k': 325000, '500k+': 500000 };
-  var AMT_MID = { 'lt10k': 10000, '10-50k': 30000, '50-150k': 100000, '150-500k': 325000, '500k+': 500000 };
-
-  function isDisqualifier(field, value) {
-    return (field === 'state'          && value === 'not-listed') ||
-           (field === 'timeInBusiness' && value === 'lt6m') ||
-           (field === 'monthlyRevenue' && value === 'lt20k') ||
-           (field === 'authority'      && value === 'no');
-  }
-
-  function score(a) {
-    var fails = ['state', 'timeInBusiness', 'monthlyRevenue', 'authority'].filter(function (f) {
-      return isDisqualifier(f, a[f]);
-    });
-    if (fails.length) return { status: 'UNQUALIFIED', disqualifiedBy: fails, tier: null, ratio: null, ratioFlag: null };
-
-    var tib = ORDER.timeInBusiness.indexOf(a.timeInBusiness);
-    var rev = ORDER.monthlyRevenue.indexOf(a.monthlyRevenue);
-    var tier = (tib >= 3 && rev >= 3) ? 'TIER_A'
-             : (tib >= 2 && rev >= 2) ? 'TIER_B'
-             : 'TIER_C';
-
-    var ratio = AMT_MID[a.fundingAmount] / REV_MID[a.monthlyRevenue];
-    var flag  = ratio <= 1.5 ? 'REALISTIC' : ratio <= 3 ? 'NEEDS_RESET' : 'EXPECTATION_GAP';
-
-    return { status: 'QUALIFIED', disqualifiedBy: [], tier: tier, ratio: Math.round(ratio * 100) / 100, ratioFlag: flag };
-  }
+  /* Rules live in scoring.js and are re-run on the server. */
+  var S = window.FundMeScoring;
+  var isDisqualifier = S.isDisqualifier;
+  var score = S.score;
 
   /* ── State ──────────────────────────────────────────── */
   function isPlaceholder(v) { return !v || /^\{\{[^}]*\}\}$/.test(String(v)); }
