@@ -37,6 +37,31 @@ function rescore(record) {
   return scoring.score(answers);
 }
 
+/* Turns Google's response into something a human can act on. Google
+   answers with its own HTML (sign-in / not-found pages) before the script
+   ever runs; only a JSON body means doPost actually executed. */
+function interpret(status, finalUrl, text) {
+  const html = /^\s*<!doctype html|^\s*<html/i.test(text);
+  const signin = /accounts\.google\.com/.test(finalUrl || '') || /ServiceLogin|signin/i.test(text.slice(0, 2000));
+  let json = null;
+  try { json = JSON.parse(text); } catch (e) {}
+
+  if (status === 401 || signin) return {
+    ok: false, error: `HTTP ${status} — the Apps Script deployment requires a Google sign-in, so doPost never ran. ` +
+      'In Apps Script: Deploy → Manage deployments → ✎ → "Who has access" = Anyone → Deploy.'
+  };
+  if (status === 404) return { ok: false, error: 'HTTP 404 — no deployment at SHEETS_WEBHOOK_URL. Copy the /exec URL from Deploy → Manage deployments.' };
+  if (status >= 400) return { ok: false, error: `HTTP ${status}`, body: text.slice(0, 300) };
+  if (json && (json.result === 'error' || json.error || json.ok === false || /unauthori[sz]ed|invalid secret|forbidden/i.test(text))) {
+    return { ok: false, error: 'script ran but rejected the request (secret mismatch?)', body: text.slice(0, 300) };
+  }
+  if (html) {
+    const m = text.match(/Script function not found: (\w+)|The script completed but did not return anything/);
+    return { ok: false, error: m ? m[0] + ' — the deployed version has no doPost, or an older version is deployed' : 'HTTP ' + status + ' but Google returned an HTML page, not the script output', body: text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 200) };
+  }
+  return { ok: true, body: text.slice(0, 300) };
+}
+
 async function postToSheets(env, data) {
   const url = env.SHEETS_WEBHOOK_URL;
   const secret = env.SHEETS_SECRET;
@@ -54,9 +79,8 @@ async function postToSheets(env, data) {
       redirect: 'follow',
       signal: ctrl.signal
     });
-    const text = (await res.text()).slice(0, 300);
-    if (!res.ok) return { ok: false, error: `HTTP ${res.status}`, body: text };
-    return { ok: true, body: text };
+    const text = await res.text();
+    return interpret(res.status, res.url, text);
   } catch (e) {
     return { ok: false, error: e.name === 'AbortError' ? `timeout after ${SHEETS_TIMEOUT_MS}ms` : e.message };
   } finally {
@@ -99,4 +123,4 @@ async function handleSubmission(body, env) {
   return { status: 200, body: { ok: true, status: result.status, logged: sheets.ok } };
 }
 
-module.exports = { handleSubmission, rescore, classify, postToSheets };
+module.exports = { handleSubmission, rescore, classify, postToSheets, interpret };

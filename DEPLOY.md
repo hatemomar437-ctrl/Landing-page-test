@@ -14,7 +14,12 @@
 ```bash
 cp .env.example .env.local     # fill in SHEETS_WEBHOOK_URL and SHEETS_SECRET
 node server.js                 # http://localhost:3000
+node server/check-sheets.js    # is the webhook reachable? (wrong-secret probe, writes nothing)
+node server/check-sheets.js --real   # write one test row
 ```
+
+The Apps Script web app must be deployed with **Who has access: Anyone** — otherwise Google answers
+every request with a sign-in page (HTTP 401) and `doPost` never runs.
 
 ## GitHub Pages (site only)
 
