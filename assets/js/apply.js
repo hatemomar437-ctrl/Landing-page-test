@@ -128,7 +128,20 @@
     var pct = Math.round((n / TOTAL) * 100);
     if (progressBar)  progressBar.style.width = pct + '%';
     if (progressWrap) progressWrap.setAttribute('aria-valuenow', String(n));
-    if (stepLabel)    stepLabel.textContent = n >= TOTAL ? 'Done' : (n + 1) + ' / ' + TOTAL;
+    if (stepLabel) {
+      if (n >= TOTAL) {
+        /* Booking reached: the counter turns into a way back to the landing page. */
+        stepLabel.textContent = 'Done';
+        stepLabel.setAttribute('href', '../' + location.search);
+        stepLabel.setAttribute('aria-label', 'Done — back to the FundMe home page');
+        stepLabel.removeAttribute('aria-hidden');
+      } else {
+        stepLabel.textContent = (n + 1) + ' / ' + TOTAL;
+        stepLabel.removeAttribute('href');
+        stepLabel.removeAttribute('aria-label');
+        stepLabel.setAttribute('aria-hidden', 'true');
+      }
+    }
   }
 
   function show(name, back) {

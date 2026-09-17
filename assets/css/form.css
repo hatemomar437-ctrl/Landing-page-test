@@ -21,11 +21,18 @@
 }
 @media (min-width: 1024px) { .form-header__row { padding-block: 24px; } }
 .form-header__step {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--fg-muted);
   font-weight: 700;
   letter-spacing: .09em;
   font-variant-numeric: tabular-nums;
 }
+/* Once it carries an href it is the "Done" link home — same idiom as the header nav links. */
+.form-header__step[href] { color: var(--fg); transition: opacity .2s var(--ease); }
+.form-header__step[href]::after { content: "→"; margin-left: 6px; }
+.form-header__step[href]:hover { opacity: .7; }
 
 /* Thin progress line in the landing page's CTA color. Fixed to the
    very top so it reads as part of the browser chrome, not the page. */
