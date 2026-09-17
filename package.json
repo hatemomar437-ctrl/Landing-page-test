@@ -1,0 +1,11 @@
+{
+  "name": "fundme-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FundMe landing page, /apply qualification form and Google Sheets logging. No dependencies.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js",
+    "check:sheets": "node server/check-sheets.js"
+  }
+}

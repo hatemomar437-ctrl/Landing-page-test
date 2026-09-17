@@ -11,8 +11,8 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { load } = require('./server/env');
-const { handleSubmission } = require('./server/submission');
+const { load } = require('./api/_lib/env');
+const { handleSubmission } = require('./api/_lib/submission');
 
 load();
 const ROOT = __dirname;

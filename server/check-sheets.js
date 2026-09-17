@@ -8,8 +8,8 @@
                                           (email: probe@example.com) */
 'use strict';
 const path = require('path');
-require('./env').load(path.join(__dirname, '..', '.env.local'));
-const { interpret } = require('./submission');
+require('../api/_lib/env').load(path.join(__dirname, '..', '.env.local'));
+const { interpret } = require('../api/_lib/submission');
 
 const url = process.env.SHEETS_WEBHOOK_URL;
 const secret = process.env.SHEETS_SECRET;

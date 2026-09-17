@@ -1,6 +1,6 @@
 /* FundMe — qualification scoring. ONE copy of the rules, run in two places:
    in the browser by apply.js (to route and to show the booking screen) and
-   again on the server by server/submission.js (the version that is logged).
+   again on the server by api/_lib/submission.js (the version that is logged).
    The server never trusts the client's verdict.
 
    Loads as window.FundMeScoring in a browser, module.exports in Node. */

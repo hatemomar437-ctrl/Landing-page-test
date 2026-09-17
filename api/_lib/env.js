@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 function load(file) {
-  const p = file || path.join(__dirname, '..', '.env.local');
+  const p = file || path.join(__dirname, '..', '..', '.env.local');
   if (!fs.existsSync(p)) return {};
   const loaded = {};
   for (const raw of fs.readFileSync(p, 'utf8').split(/\r?\n/)) {

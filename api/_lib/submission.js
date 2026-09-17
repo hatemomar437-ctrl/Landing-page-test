@@ -4,7 +4,7 @@
    response is 200 whether or not Sheets accepted the row. Failures are
    logged here, with the record id, so they can be replayed. */
 'use strict';
-const scoring = require('../assets/js/scoring.js');
+const scoring = require('../../assets/js/scoring.js');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const SHEETS_TIMEOUT_MS = 10000;

@@ -3,7 +3,8 @@
 ## Two parts
 
 1. **The site** — static HTML/CSS/JS. Host anywhere, including GitHub Pages (below).
-2. **`server.js`** — a dependency-free Node server that serves the same files **and** handles
+2. **`/api/submit`** — re-scores server-side and logs to Google Sheets. On Vercel this is
+   `api/submit.js`; locally (or on any Node host) `server.js` serves the site **and** handles
    `POST /api/submit`: it re-runs the qualification scoring server-side and logs
    `{ email, status }` to the Google Sheets Apps Script webhook. GitHub Pages cannot run it, so on
    Pages the form works but nothing reaches the sheet (the beacon 404s silently — the visitor's
@@ -20,6 +21,22 @@ node server/check-sheets.js --real   # write one test row
 
 The Apps Script web app must be deployed with **Who has access: Anyone** — otherwise Google answers
 every request with a sign-in page (HTTP 401) and `doPost` never runs.
+
+## Vercel (site + Sheets logging) — recommended
+
+The repo is Vercel-ready with no build step: static files are served from the root and
+`api/submit.js` / `api/health.js` run as serverless functions. Both use the same
+`api/_lib/submission.js` as `server.js` does locally, so behaviour is identical.
+
+1. vercel.com → **Add New → Project** → import `hatemomar437-ctrl/Landing-page-test`.
+2. Framework Preset: **Other**. Leave build command and output directory **empty**.
+3. **Environment Variables** — add both, for Production (and Preview if you want previews to log):
+   - `SHEETS_WEBHOOK_URL` = the Apps Script `/exec` URL
+   - `SHEETS_SECRET` = the shared secret
+4. **Deploy**. Then open `https://<project>.vercel.app/api/health` — it must say `"sheets": true`.
+
+`.vercelignore` keeps `server.js`, `server/`, `.env*` and this file out of the upload.
+`vercel.json` adds `trailingSlash: true` so `/apply` → `/apply/` and the relative asset paths resolve.
 
 ## GitHub Pages (site only)
 

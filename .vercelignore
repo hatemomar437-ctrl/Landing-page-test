@@ -1,0 +1,10 @@
+# Local-only: the Node server and its helpers (Vercel runs api/ instead),
+# secrets, and repo housekeeping. Nothing here is needed to build or serve.
+.env
+.env.*
+.git
+node_modules
+server.js
+server/
+DEPLOY.md
+.nojekyll
