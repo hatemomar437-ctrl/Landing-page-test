@@ -550,6 +550,10 @@
     if (e.persisted) leaving = false;
   });
 
+  /* Logo → landing page, carrying the attribution params back with it. */
+  var home = document.querySelector('[data-home]');
+  if (home && location.search) home.setAttribute('href', home.getAttribute('href').split('?')[0] + location.search);
+
   /* ── Boot ───────────────────────────────────────────── */
   var start = state.completed && state.result && state.result.status === 'QUALIFIED' ? 'booking' : STEPS[Math.min(state.step, TOTAL - 1)];
   if (start !== 'booking' && state.completed) { state.completed = false; state.result = null; save(); }
